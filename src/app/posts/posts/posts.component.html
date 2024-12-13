@@ -1,0 +1,24 @@
+<div class="container">
+    <mat-toolbar color="primary">
+      <span>Post Manager</span>
+      <button mat-raised-button (click)="openPostDialog()">Nuevo Post</button>
+    </mat-toolbar>
+  
+    <mat-card appearance="outlined" *ngFor="let post of posts">
+      <mat-card-content>
+        <div mat-line>{{ post.title }}</div>
+        <div mat-line>{{ post.content }}</div>
+        <button mat-button (click)="openPostDialog(post)">
+          edit
+        </button>
+        <button mat-button (click)="deletePost(post)">
+          delete
+        </button>
+      </mat-card-content>
+    </mat-card>
+  
+    <ng-template #noPosts>
+      <p>No hay posts disponibles. Crea uno nuevo.</p>
+    </ng-template>
+  </div>
+  

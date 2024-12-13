@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{ data.uuid ? 'Editar Post' : 'Crear Nuevo Post' }}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Título</mat-label>
+    <input matInput [(ngModel)]="data.title" />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Contenido</mat-label>
+    <textarea matInput rows="4" [(ngModel)]="data.content"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data">Guardar</button>
+</div>
