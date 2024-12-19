@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   client:
     ports:
@@ -11,10 +9,16 @@ services:
     volumes:
       - ./:/app
       - /app/node_modules
-    networks:
-      - front-network
+    # networks:
+    #   - front-network
 
-networks:
-  front-network:
-    name: posts_app-network
-    external: true
+
+# networks:
+#   front-network:
+#     driver: bridge
+
+# Si un proceso dentro del contenedor necesita comunicarse, con otro contenedor, es necesario que estén en la misma red
+# para este caso particular, no es necesario para garantizar la comunicación, ya que una vez llega al navegador
+# el navegador si tiene acceso a la dirección del contenedor del backend
+    # name: posts_app-network
+    # external: true
