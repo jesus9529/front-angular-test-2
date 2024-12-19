@@ -19,8 +19,24 @@ RUN npm run build --prod
 # Etapa de producción
 FROM nginx:alpine
 
+# Crear un usuario y grupo no root
+RUN addgroup --system appgroup && adduser --system --no-create-home --ingroup appgroup appuser
+
 # Copiar los archivos construidos desde la etapa de construcción
 COPY --from=build /app/dist/test2/browser /usr/share/nginx/html
+
+# Cambiar los permisos para que el usuario no root pueda acceder
+RUN chown -R appuser:appgroup /usr/share/nginx/html \
+    && chown -R appuser:appgroup /var/cache/nginx \
+    && chown -R appuser:appgroup /var/log/nginx \
+    && chown -R appuser:appgroup /var/run \
+    && chown -R appuser:appgroup /etc/nginx
+
+# Cambiar el archivo de PID a un directorio con permisos
+RUN sed -i 's|/var/run/nginx.pid|/tmp/nginx.pid|g' /etc/nginx/nginx.conf /etc/nginx/conf.d/*
+
+# Cambiar al usuario no root
+USER appuser
 
 # Exponer el puerto 80 para acceder a la aplicación
 EXPOSE 80
